@@ -1,21 +1,38 @@
-const caesarCipher = () => {
-  return 'bcd';
+const caesarCipher = (string, cipher) => {
+  const stringArray = string.split('');
+  return stringArray
+    .map((letter) => {
+      const ASCII = letter.charCodeAt(0);
+      if (ASCII >= 65 && ASCII <= 90) {
+        return uppercaseCipher(ASCII, cipher);
+      } else if (ASCII >= 97 && ASCII <= 122) {
+        return lowercaseCipher(ASCII, cipher);
+      }
+      return letter;
+    })
+    .join('');
 };
 
-/* 
-From charcode at 97 to 122 you have every letter in the alphabet
-let yeet = 'A'.charCodeAt(0)
->> 65
-let yeetZ = 'Z'.charCodeAt(0)
->> 90
-let uni = 'z'.charCodeAt(0)
->> 97
-let uniZ = 'z'.charCodeAt(0)
->> 122
+const lowercaseCipher = (ASCII, cipher) => {
+  const newASCII = ASCII + cipher;
+  if (newASCII <= 122) {
+    return String.fromCharCode(newASCII);
+  } else {
+    const diff = newASCII - 123;
+    const updatedASCII = 97 + diff;
+    return String.fromCharCode(updatedASCII);
+  }
+};
 
-Therefore if the number is between 65 - 90 then toggle between 65-90 
-And if it's between 97 - 122 toggle between 97 - 122.  
-Otherwise leave the value.
-*/
+const uppercaseCipher = (ASCII, cipher) => {
+  const newASCII = ASCII + cipher;
+  if (newASCII <= 90) {
+    return String.fromCharCode(newASCII);
+  } else {
+    const diff = newASCII - 91;
+    const updatedASCII = 65 + diff;
+    return String.fromCharCode(updatedASCII);
+  }
+};
 
 export default caesarCipher;
